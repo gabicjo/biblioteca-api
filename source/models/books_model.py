@@ -1,9 +1,9 @@
 import sqlite3
 
-conexão = sqlite3.connect("banco.db")
-cursor = conexão.cursor()
-
 def criar_tabela_books():
+    conexão = sqlite3.connect("banco.db")
+    cursor = conexão.cursor()
+
     cursor.execute("""CREATE TABLE IF NOT EXISTS livros (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT NOT NULL,
@@ -15,6 +15,13 @@ def criar_tabela_books():
                     status TEXT NOT NULL
                     )""")
 
-criar_tabela_books()
+def adicionar_livro_novo(dados: dict):
+    conexão = sqlite3.connect("banco.db")
+    cursor = conexão.cursor()
+    colunas = ",".join(dados.keys())
+    placeholders = ",".join([f":{k}" for k in dados.keys()])
 
-conexão.commit()
+    sql = f"INSERT INTO livros ({colunas}) VALUES ({placeholders})"
+
+    cursor.execute(sql, dados)
+    conexão.commit()
