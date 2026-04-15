@@ -1,6 +1,6 @@
 from models import books_model
 
-def verificar_faltantes(dados: dict, requeridos: list):
+def __verificar_colunas_faltantes(dados: dict, requeridos: list):
     faltando = []
 
     for item in requeridos:
@@ -10,7 +10,7 @@ def verificar_faltantes(dados: dict, requeridos: list):
     return faltando
 
 def verificar_dados_recebidos(dados):
-    faltando = verificar_faltantes(dados, ["name", "autor", "publish_date", "page_number", "genre"])
+    faltando = __verificar_colunas_faltantes(dados, ["name", "autor", "publish_date", "page_number", "genre"])
 
     if faltando:
         return "error"
