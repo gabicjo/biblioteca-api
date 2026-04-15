@@ -24,6 +24,11 @@ def __corrigir_dados_vazios(dados: dict) -> dict:
     return dados
 
 
+def __corrigir_dados_invalidos(dados: dict) -> dict:
+    if dados['status'] not in ["disponivel", "emprestado"]:
+        dados['status'] = "disponivel"
+
+
 def verificar_dados_recebidos(dados: dict) -> str:
     faltando = __verificar_colunas_faltantes(dados, ["name", "publish_date", "page_number", "genre"])
 
@@ -31,6 +36,7 @@ def verificar_dados_recebidos(dados: dict) -> str:
         return "error"
 
     dados = __corrigir_dados_vazios(dados)
+    dados = __corrigir_dados_invalidos(dados)
 
     books_model.adicionar_livro_novo(dados)
     return "ok"
