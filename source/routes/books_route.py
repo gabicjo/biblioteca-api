@@ -22,7 +22,12 @@ def listar_livros():
 @books_bp.route("/books/delete/<int:book_id>", methods=["DELETE"])
 def deletar_livro(book_id):
     req = books_controller.verificar_esse_livro_existe(book_id)
+
     if req:
         books_model.deletar_livro(book_id)
         return jsonify({"message": "livro deletado com sucesso"}), 200
     return jsonify({"message": "livro não encontrado"}), 404
+
+@books_bp.route("/books", methods=["GET"])
+def exibir_livros():
+    return jsonify(books_model.exibir_todos_livros()), 200

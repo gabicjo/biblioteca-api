@@ -40,3 +40,10 @@ def deletar_livro(book_id):
 
     cursor.execute("DELETE FROM livros WHERE id = ?", (book_id,))
     conexão.commit()
+
+def exibir_todos_livros():
+    conexão = sqlite3.connect("banco.db")
+    cursor = conexão.cursor()
+
+    cursor.execute("SELECT * FROM livros")
+    return cursor.fetchall()
