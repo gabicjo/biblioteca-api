@@ -18,3 +18,11 @@ def listar_livros():
         
     except DadosInvalidosError:
         return {"message": "dados invalidos"}, 400
+
+@books_bp.route("/books/delete/<int:book_id>", methods=["DELETE"])
+def deletar_livro(book_id):
+    req = books_controller.verificar_esse_livro_existe(book_id)
+    if req:
+        books_model.deletar_livro(book_id)
+        return jsonify({"message": "livro deletado com sucesso"}), 200
+    return jsonify({"message": "livro não encontrado"}), 404

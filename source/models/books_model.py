@@ -25,3 +25,18 @@ def adicionar_livro_novo(dados: dict):
 
     cursor.execute(sql, dados)
     conexão.commit()
+
+def verificar_existencia_livro(book_id):
+    conexão = sqlite3.connect("banco.db")
+    cursor = conexão.cursor()
+
+    cursor.execute("SELECT 1 FROM livros WHERE id = ?", (book_id))
+
+    return cursor.fetchone()
+
+def deletar_livro(book_id):
+    conexão = sqlite3.connect("banco.db")
+    cursor = conexão.cursor()
+
+    cursor.execute("DELETE FROM livros WHERE id = ?", (book_id))
+    conexão.commit()
