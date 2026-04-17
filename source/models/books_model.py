@@ -1,3 +1,6 @@
+from typing import Any
+
+
 import sqlite3
 
 def criar_tabela_books():
@@ -64,3 +67,16 @@ def exibir_detalhes_livro(book_id):
         "genre": resultado[6],
         "status": resultado[7]
     }
+
+def atualizar_informações(book_id, dados):
+    conexão = sqlite3.connect("banco.db")
+    cursor = conexão.cursor()
+
+    campos = ",".join([f"{k} = ?" for k in dados.keys()])
+    valores = list(dados.values())
+    sql = f"UPDATE livros SET {campos} WHERE id = ?"
+
+    cursor.execute(sql, valores + [book_id])
+    
+    conexão.commit()
+    conexão.close()
