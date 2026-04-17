@@ -1,6 +1,3 @@
-from typing import Any
-
-
 import sqlite3
 
 def criar_tabela_books():
