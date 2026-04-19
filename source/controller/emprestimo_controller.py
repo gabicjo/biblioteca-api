@@ -5,3 +5,9 @@ def verificar_pode_emprestar(book_id):
         return True
     
     return False
+
+def verificar_pode_devolver(book_id):
+    if emprestimo_model.verificar_status(book_id) == "emprestado":
+        return True
+    
+    return False

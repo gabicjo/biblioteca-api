@@ -9,6 +9,17 @@ def emprestar_livro(book_id):
     conexão.commit()
     conexão.close()
 
+
+def devolver_livro(book_id):
+    conexão = sqlite3.connect("banco.db")
+    cursor = conexão.cursor()
+
+    cursor.execute("UPDATE livros SET status = 'disponivel' WHERE id = ?", (book_id,))
+    
+    conexão.commit()
+    conexão.close()
+
+
 def verificar_status(book_id):
     conexão = sqlite3.connect("banco.db")
     cursor = conexão.cursor()
