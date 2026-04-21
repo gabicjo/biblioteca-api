@@ -2,12 +2,18 @@ from flask import Flask
 from flask_cors import CORS
 from routes.books_route import books_bp
 from routes.emprestimo_routes import emprestimo_bp
-from flask_login import UserMixin, login_user, LoginManager
-from routes.login_routes import login_bp
+from flask_login import login_user, LoginManager
+from routes.users_routes import login_bp
+from models.users_model import User
 
 URLPREFIX = "/api"
 
 login_manager = LoginManager()
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
 
 app = Flask(__name__)
 CORS(app)
