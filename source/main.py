@@ -16,6 +16,7 @@ def load_user(user_id):
     return User.get(user_id)
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = "minha_chave_123"
 CORS(app)
 
 login_manager.init_app(app)

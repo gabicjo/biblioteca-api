@@ -2,11 +2,13 @@ from flask import Flask, Blueprint, jsonify, request
 from utils.verificar_existencia import verificar_esse_livro_existe
 from controller import emprestimo_controller
 from models import emprestimo_model
+from flask_login import login_required
 
 emprestimo_bp = Blueprint("emprestimo", __name__)
 
 
 @emprestimo_bp.route("/books/emprestar/<int:book_id>", methods=["PUT"])
+@login_required
 def emprestar_livro(book_id):
     if verificar_esse_livro_existe(book_id):
         if emprestimo_controller.verificar_pode_emprestar(book_id):
@@ -18,6 +20,7 @@ def emprestar_livro(book_id):
     return jsonify({"message": "livro não encontrado"}), 404
 
 @emprestimo_bp.route("/books/devolver/<int:book_id>", methods=["PUT"])
+@login_required
 def devolver_livro(book_id):
     if verificar_esse_livro_existe(book_id):
         if emprestimo_controller.verificar_pode_devolver(book_id):

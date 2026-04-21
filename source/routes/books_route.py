@@ -3,12 +3,14 @@ from models import books_model
 from controller import books_controller
 from utils.errors import DadosInvalidosError
 from utils.verificar_existencia import verificar_esse_livro_existe
+from flask_login import login_required
 
 books_bp = Blueprint("books", __name__)
 
 
 @books_bp.route("/books/add", methods=["POST"])
-def listar_livros():
+@login_required
+def adicionar_livros():
     dados = request.get_json()
     try:
         verify = books_controller.verificar_dados_recebidos(dados)
@@ -23,6 +25,7 @@ def listar_livros():
 
 
 @books_bp.route("/books/delete/<int:book_id>", methods=["DELETE"])
+@login_required
 def deletar_livro(book_id):
     req = verificar_esse_livro_existe(book_id)
 
@@ -45,6 +48,7 @@ def exibir_detalhes_livro(book_id):
 
 
 @books_bp.route("/books/update/<int:book_id>", methods=["PUT"])
+@login_required
 def atualizar_informações_livro(book_id):
     if verificar_esse_livro_existe(book_id):
         response = request.json
