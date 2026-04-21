@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, jsonify, request
 from controller import users_controller
-from flask_login import login_user
+from flask_login import login_user, login_required, logout_user
 
 login_bp = Blueprint("auth", __name__)
 
@@ -14,3 +14,9 @@ def login():
         return jsonify({"message": "usuario logado com sucesso"}), 200
 
     return jsonify({"message": "informações incorretas"}), 401
+
+@login_bp.route("/account/logout", methods=["POST"])
+@login_required
+def logout():
+    logout_user()
+    return jsonify({"message": "usuario deslogado com sucesso"}), 200
