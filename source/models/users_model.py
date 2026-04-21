@@ -1,6 +1,5 @@
 import sqlite3
 
-
 def criar_tabela_users():
     conexão = sqlite3.connect("banco.db")
     cursor = conexão.cursor()
@@ -13,6 +12,3 @@ def criar_tabela_users():
     
     conexão.commit()
     conexão.close()
-
-
-criar_tabela_users()
